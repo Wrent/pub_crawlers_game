@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mahé (code)
+		   Marcin Wichary (code and design)
+		   
+		   Dominic Mazzoni (browser compatibility)
+		   Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+  <head>
+	<title>Presentation</title>
+
+	<meta charset='utf-8'>
+	<!--<script
+	  src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>-->
+	  <script src='slides.js'></script>
+  </head>
+  
+  <style>
+	/* Your individual styles here, or just use inline styles if that’s
+	   what you want. */
+	
+	article
+	{
+		background: url('bg2.png');
+		
+	}
+	
+  </style>
+
+  <body style='display: none'>
+
+	<section class='slides layout-regular template-default'>
+	  
+	  <!-- Your slides (<article>s) go here. Delete or comment out the
+		   slides below. -->
+		
+		
+	  
+	  <article style="background: url('bg1.png')">
+	    <h1>CraftyJS</h1>
+	    <p>by Stefan Mitić</p>
+	  </article>
+	  
+<!-- About me -->
+	  <article>
+	    <h3>Who am I?</h3>
+	    <ul>
+	      <li><strong>Name:</strong> Stefan Mitić</li>
+	      <li><strong>Ocupation:</strong> Full time student, part time software developer</li>
+	      <li><strong>Experience:</strong> C/C++, Qt, HTML, CSS, JavaScript, PHP</li>
+	      <li><strong>Proud crowd:</strong> Member of THE LBG Niš IT team</li>
+	    </ul>
+	    <center>
+	      <span class="green" style="background-color: #000000">
+		<strong>PROUD CROWD!</strong>
+	      </span>
+	    </center>
+	    <p>
+	      <strong>A little more:</strong><br />
+	      I'm a student of the 2nd year of Software Engineering, have been programming since the age of 14,
+	    have had some experience with a couple of larger web based apps and a few atempts at game development.
+	    </p>
+	  </article>
+
+	  <article>
+		<h3>Content</h3>
+		<ul>
+		  <!--<li>Introduction to game development</li>-->
+		  <li>Introduction to CraftyJS</li>
+		  <li>Component/Entity system</li>
+		  <li>Crafty scenes</li>
+		  <li>Sprites in Crafty</li>
+		  <li>Animation with Crafty</li>
+		  <li>Movement in Crafty</li>
+		  <li>Collision detection in Crafty</li>
+		  <li>Example game</li>
+		</ul>
+	  </article>
+	  
+	  <!--<article>-->
+	  <!--  <h1>Introduction to game development</h1>-->
+	  <!--  <p>A brief history</p>-->
+	  <!--</article>-->
+	  <!---->
+	  <!--<article>-->
+	  <!--  <p>-->
+	  <!--    1964 - First game of "Pong" played on an osciloscope-->
+	  <!--    <br />-->
+	  <!--    1970 - First gaming systems-->
+	  <!--    <br />-->
+	  <!--    1980 - Nintendo Entertainmet System (NES)-->
+	  <!--    <br />-->
+	  <!--    2000 - New generation of consoles-->
+	  <!--</article>-->
+<!-- Introduction -->
+	  <article>
+	    <h1>Introduction to CraftyJS</h1>
+	    <p align="right">"Code like a Fox"</p>
+	  </article>
+	  
+	  <article>
+	    <h3>Why Crafty?</h3>
+	    <ul class="build">
+	      <li>HTML5 + CSS3 based</li>
+	      <li>DOM & Canvas rendering systems</li>
+	      <li>Component/Entity based</li>
+	      <li>Completely coded with JavaScript</li>
+	      <li>Very well commented code</li>
+	      <li>Pleasant and helpful community</li>
+	      <li>Open Source (free as in freedom)</li>
+	    </ul>
+	  </article>
+	  
+<!-- Component/Entity -->
+	  <article>
+	    <h1>Component/Entity system</h1>
+	    <p align="right">or LEGO for programmers</p>
+	  </article>
+	  
+	  <article>
+	    <h3>Components</h3>
+	    <p>Components are definitions of actions and properties that can be assigned to an entity. Something like classes in OOP.</p>
+	    <ul>
+	      <li>Define attributes</li>
+	      <li>Define methods</li>
+	      <li>Define events</li>
+	      <li>Can have/require other components</li>
+	      <li>Used to extend entities</li>
+	    </ul>
+	  </article>
+	  
+	  <article>
+	    <h3>Entities</h3>
+	    <p>Entities are objects whos actions and properties are defined by the components assigned to them.</p>
+	    <ul>
+	      <li>Has an ID</li>
+	      <li>Has components</li>
+	      <li>Every object in the game is an entity</li>
+	    </ul>
+	  </article>
+	  
+	  <article>
+	    <h3>Why use the Component/Entity system?</h3>
+	    <ul class="build">
+	      <li>Easily expandable</li>
+	      <li>Reusable code</li>
+	      <li>Easy to code</li>
+	      <li>Well organized</li>
+	    </ul>
+	  </article>
+	  
+	  <article>
+	    <h3>Component example using Crafty</h3>
+	    <section>
+	      <pre>
+Crafty.c("Mouse", {
+  init: function(){
+      
+  },
+  Mouse: function(points, speed){
+      this.points = points;
+      this.speed = speed;
+      this.requires("Delay")
+	  .bind("Move", function(){
+	  this.move("s", 1);
+      })
+	  .interval(function(){
+	    this.trigger("Move");}, 100/this.speed
+	  );
+      return this;
+  }
+})
+	      </pre>
+	    </section>
+	  </article>
+	  
+	  <article>
+	    <h3>Entity example using Crafty</h3>
+	    <section>
+	      <pre>
+var object = Crafty.e("2D, DOM, Mouse")
+		    .Mouse(10, 5);
+	      </pre>
+	    </section>
+	  </article>
+	  
+<!-- Scene -->
+	  <article>
+	    <h1>Crafty scenes</h1>
+	    <p align="right">or where it all happens</p>
+	  </article>
+	  
+	  <article>
+	    <h3>Creating a scene</h3>
+	    <section>
+	      <pre>
+Crafty.scene(String sceneName, Function init[, Function uninit])
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>sceneName - Name of the scene to add</li>
+	      <li>init - Function to execute when scene is played</li>
+	      <li>uninit - Function to execute before next scene is played</li>
+	    </ul>
+	    <p>Examples:</p>
+	    <section>
+	      <pre>
+Crafty.scene("loading", function() {});
+Crafty.scene("loading", function() {}, function() {});
+	      </pre>
+	    </section>
+	  </article>
+	  
+	  <article>
+	    <h3>Playing a scene</h3>
+	    <section>
+	      <pre>
+Crafty.scene(String sceneName)
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>sceneName - Name of the scene to play</li>
+	    </ul>
+	    <p>Example:</p>
+	    <section>
+	      <pre>
+Crafty.scene("loading");
+	      </pre>
+	    </section>
+	  </article>
+	  
+<!-- Sprites -->
+	  <article>
+	    <h1>Sprites in Crafty</h1>
+	    <p align="right">or fancy graphics and stuff</p>
+	  </article>
+	  
+	  <article>
+	    <h3>Defining sprites</h3>
+	    <section>
+	      <pre>
+Crafty.sprite([Number tile], String url, Object map[,
+	      Number paddingX[, Number paddingY]])
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>tile - Tile size of the sprite map, defaults to 1</li>
+	      <li>url - URL of the sprite image</li>
+	      <li>map - Coordinates of the individual sprites on the map</li>
+	      <li>paddingX - Horizontal space in-between tiles. Defaults to 0</li>
+	      <li>paddingY - Vertical space in-between tiles. Defaults to paddingX</li>
+	    </ul>
+	  </article>
+	  
+	  <article>
+	    <h3>Defining sprites (example)</h3>
+	    <section>
+	      <pre>
+Crafty.sprite(16, "images/sprite.png", {
+    PlayerUp: [0,3],
+    PlayerDown: [3, 3],
+    PlayerLeft: [6, 3],
+    PlayerRight: [9, 3]
+});
+	      </pre>
+	    </section>
+	    <center>
+	    <img src="sprite.png" heigth="128px" width="384px" />
+	    </center>
+	  </article>
+	  
+	  <article>
+	    <h3>Setting sprites</h3>
+	    <section>
+	      <pre>
+.sprite(Number x, Number y, Number w, Number h)
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>x - X cell position</li>
+	      <li>y - Y cell position</li>
+	      <li>w - Width in cells</li>
+	      <li>h - Height in cells</li>
+	    </ul>
+	  </article>
+	  
+<!-- Animation -->
+	  <article>
+	    <h1>Animation in Crafty</h1>
+	    <p align="right">or dancing little rabbits</p>
+	  </article>
+	  
+	  <article>
+	    <h3>Creating/playing animations</h3>
+	    <section>
+	      <pre>
+.animate(String reelId, Number fromX, Number y, Number toX)
+.animate(String reelId, Array frames)
+.animate(String reelId, Number duration[, Number repeatCount])
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>reelID - ID of the animation reel being created</li>
+	      <li>fromX - Starting x position on the sprite map</li>
+	      <li>y - y position on the sprite map, constant</li>
+	      <li>toX - End x position on the sprite map</li>
+	      <li>frames - Array of arrays containing the x and y values</li>
+	      <li>duration - Play the animation for a number of frames</li>
+	      <li>repeatCount - number of repeats (-1 for infinitely)</li>
+	    </ul>
+	  </article>
+	  
+	  <article>
+	    <h3>Creating/playing animations (examples)</h3>
+	    <section>
+	      <pre>
+Crafty.e("2D, DOM, SpriteAnimation, PlayerSprite")
+    .animate('PlayerRunningUp', 0, 3, 2) //setup animation
+    .animate('PlayerRunningUp', 15, -1) // start animation
+
+Crafty.e("2D, DOM, SpriteAnimation, PlayerSprite")
+    .animate('PlayerRunningDown', 3, 3, 5) //setup animation
+    .animate('PlayerRunningDown', 15, -1) // start animation
+	      </pre>
+	    </section>
+	    <center>
+	    <img src="sprite.png" heigth="128px" width="384px" />
+	    </center>
+	  </article>
+	  
+<!-- Movement -->
+	  <article>
+	    <h1>Movement in Crafty</h1>
+	    <p align="right">or how to run from monsters</p>
+	  </article>
+	  
+	  <article>
+	    <h3>Where are you running to?</h3>
+	    <p>In Crafty there are a few distinct predefined movement options:</p>
+	    <ul class="build">
+	      <li>Twoway</li>
+	      <li>Fourway</li>
+	      <li>Multiway</li>
+	      <li>No way?</li>
+	      <p class="build">Twoway and Fourway are built using Multiway, one of the good sides of compinents!</p>
+	    </ul>
+	  </article>
+	  
+	  <article>
+	    <h3>Twoway</h3>
+	    <section>
+	      <pre>
+.twoway(Number speed[, Number jumpSpeed])
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>speed - Movement speed of the entity (in pixels)</li>
+	      <li>jumpSpeed - Jump speed of the entity (in pixels)</li>
+	    </ul>
+	    <br />
+	    <p>W, A and D or Up, Left and Right arrow</p>
+	  </article>
+	  
+	  <article>
+	    <h3>Fourway</h3>
+	    <section>
+	      <pre>
+.fourway(Number speed)
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>speed - Movement speed of the entity (in pixels)</li>
+	    </ul>
+	    <br />
+	    <p>W, S, A and D or Up, Down, Left and Right arrow</p>
+	  </article>
+	  
+	  <article>
+	    <h3>Multiway</h3>
+	    <section>
+	      <pre>
+.multiway([Number speed,] Object keyBindings )
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>speed - Movement speed of the entity (in pixels)</li>
+	      <li>keyBindings - Binds a key to a direction, the direction is specified in degrees (in pixels)</li>
+	    </ul>
+	    <p>Examples:</p>
+	    <section>
+	      <pre>
+this.multiway(3, {UP_ARROW: -90, DOWN_ARROW: 90,
+	      RIGHT_ARROW: 0, LEFT_ARROW: 180});
+this.multiway({x:3,y:1.5}, {UP_ARROW: -90, DOWN_ARROW: 90,
+	      RIGHT_ARROW: 0, LEFT_ARROW: 180});
+this.multiway({W: -90, S: 90, D: 0, A: 180});
+	      </pre>
+	    </section>
+	  </article>
+	  
+<!-- Collision -->
+	  <article>
+	    <h1>Collision detection in Crafty</h1>
+	    <p align="right">or how to hit your toe on something</p>
+	  </article>
+	  <article>
+	    <h3>Initialising collision</h3>
+	    <section>
+	      <pre>
+.collision([Crafty.polygon polygon])
+.collision(Array point1, .., Array pointN)
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>polygon - Crafty.polygon object that will act as the hit area</li>
+	      <li>point# - Array with an x and y position to generate a polygon</li>
+	    </ul>
+	    <p>Examples:</p>
+	    <section>
+	      <pre>
+Crafty.e("2D, Collision").collision(
+    new Crafty.polygon([50,0], [100,100], [0,100])
+);
+Crafty.e("2D, Collision").collision([50,0], [100,100], [0,100]);
+	      </pre>
+	    </section>
+	  </article>
+	  <article>
+	    <h3>onHit</h3>
+	    <section>
+	      <pre>
+.onHit(String component, Function hit[, Function noHit])
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>component - Component to check collisions for</li>
+	      <li>hit - Callback method to execute when collided with component</li>
+	      <li>noHit - Callback method executed once as soon as collision stops</li>
+	    </ul>
+	  </article>
+	  <article>
+	    <h3>hit</h3>
+	    <section>
+	      <pre>
+.hit(String component)
+	      </pre>
+	    </section>
+	    <ul>
+	      <li>component - Component to check collisions for</li>
+	    </ul>
+	    <p>Returns an array of objects with collision data:</p>
+	    <section>
+	      <pre>
+[{
+   obj: [entity],
+   type: "MBR" or "SAT",
+   overlap: [number]
+}]
+	      </pre>
+	    </section>
+	  </article>
+	  
+<!-- Example -->
+	  <article>
+	    <h1>Example game</h1>
+	    <p align="right">or me bragging a bit</p>
+	  </article>
+	  
+	  <article>
+	    <section>
+	      <pre>
+Crafty.c("Fruit", {
+    init: function(){ this.points = 0;},
+    
+    Fruit: function(points, stage){
+	this.points = points;
+	this.stage = stage;
+	
+	this.bind("EnterFrame", function(){
+	    if(this.y > 320)
+	    {
+		this.destroy();
+	    }
+	})
+	
+	return this;
+    }
+})
+	      </pre>
+	    </section>
+	  </article>
+	  
+	  <article>
+	    <section>
+	      <pre>
+Crafty.c("Basket", {
+        init: function(){this.score = 0;},
+        
+        Basket: function(){
+            this.requires("Collision, 2D, DOM, Twoway")
+            .onHit("Fruit", function(){
+                this.score += this.hit("Fruit")[0]["obj"].points;
+                this.hit("Fruit")[0]["obj"].destroy();
+                
+            })
+            .twoway(5);
+            
+            return this;
+        }
+    })
+	      </pre>
+	    </section>
+	  </article>
+	  
+	  <article>
+	    <section>
+	      <pre>
+Crafty.c("TheEye", {
+        init: function() {
+            this.max_fruits = 5;
+            this.fruits = 0;
+            
+            this.score_text = Crafty.e("2D, DOM, Text")
+            .attr({x: 220, y: 0, z: 1})
+            .text("Score: 0")
+        },
+	...
+	      </pre>
+	    </section>
+	  </article>
+	  
+	  <article>
+	    <section>
+	      <pre>    
+        TheEye: function(basket) {
+            this.basket = basket;
+            this.requires("Fruit")
+            .bind("EnterFrame", function(){
+                if((this.fruits < 5 && Crafty.math.randomInt(0, 1000) > 950) || this.fruits <= 0)
+                {
+                    var rand = Crafty.math.randomInt(0, 100);
+                    
+                    if(rand < 50)
+                    {
+                        Crafty.e("2D, DOM, Fruit, apple, Gravity")
+                        .attr({x: Crafty.math.randomInt(0, 288), y: -32, z: 1})
+                        .gravity()
+                        .gravityConst(0.02)
+                        .Fruit(10, this)
+                        .bind("Remove", function(){this.stage.fruits--;console.log("Fruits:" + this.stage.fruits);})
+                    }
+                    ...
+	      </pre>
+	    </section>
+	  </article>
+	  
+	  <article>
+	    <section>
+	      <pre>                  
+                    this.fruits++;
+                }
+                
+                this.score_text.text("Score:"+this.basket.score);
+            })
+            
+            return this;
+        }
+    })
+	      </pre>
+	    </section>
+	  </article>
+	  
+	  <article>
+	    <section>
+	      <pre>
+Crafty.scene("loading", function(){
+        Crafty.load(["fruits.png"], function(){
+            Crafty.sprite(32, "fruits.png", {
+                banana: [0, 0],
+                orange: [1, 0],
+                apple:  [2, 0],
+                star:   [3, 0],
+                basket: [4, 0]
+            });
+            
+            Crafty.scene("main");
+        })
+    })
+	      </pre>
+	    </section>
+	  </article>
+	  
+	  	  <article>
+	    <section>
+	      <pre>
+Crafty.scene("main", function(){
+        var basket = Crafty.e("2D, DOM, Basket, basket")
+                            .attr({x: 160, y: 288, z: 1})
+                            .Basket();
+        
+        var stage = Crafty.e("2D, DOM, TheEye")
+                            .TheEye(basket);
+    })
+	      </pre>
+	    </section>
+	  </article>
+		  
+	  <article>
+	    <section>
+	      <pre>
+Crafty.init(320, 320);
+Crafty.scene("loading");
+	      </pre>
+	    </section>
+	  </article>
+	  
+	  <article>
+	    <center><iframe style="height: 400px; width: 400px;" src="catch_em.html"></iframe></center>
+	  </article>
+	  
+	  <article>
+	    <h1>Thank you for your time!</h1>
+	    <p align="right">or it has just began...</p>
+	  </article>
+	  
+	</section>
+  </body>
+</html>
